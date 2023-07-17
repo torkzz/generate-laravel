@@ -1,6 +1,7 @@
 ## Laravel Vue API Crud Generator
 
 #### Overview
+
 A Laravel package that lets you generate boilerplate code for a Vue.js/Laravel app. Simply enter the name of a database table and based on that it will create:
 
 - A Laravel model
@@ -11,12 +12,12 @@ A Laravel package that lets you generate boilerplate code for a Vue.js/Laravel a
 This package aims to speed up the process of communicating between backend (Laravel) and frontend (Vue.js).
 
 ### Installation
-`composer require lummy/laravel-vue-api-crud-generator`
 
+`composer require torkzz/laravel-vue-api-crud-generator`
 
 ## Usage
 
-Firstly you should create a new migration in the same way that you usually would. For example if creating a posts table use the command 
+Firstly you should create a new migration in the same way that you usually would. For example if creating a posts table use the command
 
 `php artisan make:migration create_posts_table`
 
@@ -31,19 +32,19 @@ Schema::create('posts', function (Blueprint $table) {
 });
 ```
 
-Then run the migrate command to create the posts table 
+Then run the migrate command to create the posts table
 
 `php artisan migrate`
 
-Once you have done that you just need to run one `vueapi` command. Add the name of your table to the end of the command so in this case it's posts.
+Once you have done that you just need to run one `generateLaravelApi` command. Add the name of your table to the end of the command so in this case it's posts.
 
-`php artisan vueapi:generate posts`
+`php artisan generateLaravelApi:generate posts`
 
 This will then generate all the files mentioned above.
 
 Once you have run this command, using the `posts` example above, it will create the following boilerplate files:
 
-### Routes 
+### Routes
 
 Based on a `posts` DB table it will produce these routes
 
@@ -61,7 +62,7 @@ Route::delete('posts/{id}', 'PostsController@delete');
 Based on a `posts` DB table it will produce this controller
 
 ```
-<?php 
+<?php
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -72,13 +73,13 @@ class PostsController extends Controller
     public function get(Request $request, $id){
       return Posts::findOrFail($id);
     }
-    
+
     public function list(Request $request){
       return Posts::get();
     }
-    
+
     public function create(Request $request){
-        
+
       $validatedData = $request->validate([
         'title' => 'required |max:200 ',
         'content' => 'required ',
@@ -91,12 +92,12 @@ class PostsController extends Controller
         'meta_description.max' => 'meta_description can only be 160 characters.',
       ]);
 
-        $posts = Posts::create($request->all());    
+        $posts = Posts::create($request->all());
         return $posts;
     }
-    
+
     public function update(Request $request, $id){
-      
+
       $validatedData = $request->validate([
         'title' => 'required |max:200 ',
         'content' => 'required ',
@@ -114,7 +115,7 @@ class PostsController extends Controller
         $posts->fill($input)->save();
         return $posts;
     }
-    
+
     public function delete(Request $request, $id){
         $posts = Posts::findOrFail($id);
         $posts->delete();
@@ -123,12 +124,13 @@ class PostsController extends Controller
  ?>
 
 ```
-### Model 
+
+### Model
 
 Based on a `posts` DB table it will produce this model
 
 ```
-<?php 
+<?php
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -164,15 +166,15 @@ Based on a `posts` DB table it will produce this Vue.js list single file compone
 ```
 <template lang="html">
       <div class="posts">
-        
+
         <div class="half">
-          
+
           <h1>Create post</h1>
-          
+
           <form @submit.prevent="createPost">
-            
+
             <div class="form-group">
-   
+
                   <input type="hidden" v-model="form.id"></input>
             </div>
             <div class="form-group">
@@ -191,44 +193,44 @@ Based on a `posts` DB table it will produce this Vue.js list single file compone
                   <has-error :form="form" field="meta_description"></has-error>
             </div>
             <div class="form-group">
-   
+
                   <input type="hidden" v-model="form.created_at"></input>
             </div>
             <div class="form-group">
-   
+
                   <input type="hidden" v-model="form.updated_at"></input>
             </div>
-        
+
             <div class="form-group">
                 <button class="button" type="submit" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Submit'}}</button>
             </div>
           </form>
-          
+
         </div><!-- End first half -->
-        
+
         <div class="half">
-          
+
           <h1>List posts</h1>
-          
+
           <ul v-if="posts.length > 0">
             <li v-for="(post,index) in posts" :key="post.id">
-              
+
             <router-link :to="'/post/'+post.id">
-              
+
               post {{ index }}
 
               <button @click.prevent="deletePost(post,index)" type="button" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Delete'}}</button>
-              
+
             </router-link>
-              
+
             </li>
           </ul>
-          
+
           <span v-else-if="!posts">Loading...</span>
           <span v-else>No posts exist</span>
-          
+
         </div><!-- End 2nd half -->
-        
+
       </div>
 </template>
 
@@ -255,28 +257,28 @@ export default {
   },
   methods: {
     listPosts: function(){
-      
+
       var that = this;
       this.form.get('/posts').then(function(response){
         that.posts = response.data;
       })
-      
+
     },
     createPost: function(){
-      
+
       var that = this;
       this.form.post('/posts').then(function(response){
         that.posts.push(response.data);
       })
-      
+
     },
     deletePost: function(post, index){
-      
+
       var that = this;
       this.form.delete('/posts/'+post.id).then(function(response){
         that.posts.splice(index,1);
       })
-      
+
     }
   }
 }
@@ -347,13 +349,13 @@ Based on a `posts` DB table it will produce this Vue.js single file component (P
 <template lang="html">
       <div class="PostSingle">
         <h1>Update Post</h1>
-        
+
         <form @submit.prevent="updatePost" v-if="loaded">
-          
+
           <router-link to="/posts">< Back to posts</router-link>
-          
+
             <div class="form-group">
-   
+
                   <input type="hidden" v-model="form.id"></input>
             </div>
             <div class="form-group">
@@ -372,20 +374,20 @@ Based on a `posts` DB table it will produce this Vue.js single file component (P
                   <has-error :form="form" field="meta_description"></has-error>
             </div>
             <div class="form-group">
-   
+
                   <input type="hidden" v-model="form.created_at"></input>
             </div>
             <div class="form-group">
-   
+
                   <input type="hidden" v-model="form.updated_at"></input>
             </div>
-      
+
           <div class="form-group">
               <button class="button" type="submit" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Update'}}</button>
               <button @click.prevent="deletePost">{{ (form.busy) ? 'Please wait...' : 'Delete'}}</button>
           </div>
         </form>
-        
+
         <span v-else>Loading post...</span>
       </div>
 </template>
@@ -405,7 +407,7 @@ export default {
           "meta_description" : "",
           "created_at" : "",
           "updated_at" : "",
-        
+
       })
     }
   },
@@ -414,7 +416,7 @@ export default {
   },
   methods: {
     getPost: function(Post){
-      
+
       var that = this;
       this.form.get('/posts/'+this.$route.params.id).then(function(response){
         that.form.fill(response.data);
@@ -424,24 +426,24 @@ export default {
               that.$router.push('/404');
           }
       });
-      
+
     },
     updatePost: function(){
-      
+
       var that = this;
       this.form.put('/posts/'+this.$route.params.id).then(function(response){
         that.form.fill(response.data);
       })
-      
+
     },
     deletePost: function(){
-      
+
       var that = this;
       this.form.delete('/posts/'+this.$route.params.id).then(function(response){
         that.form.fill(response.data);
         that.$router.push('/posts');
       })
-      
+
     }
   }
 }
@@ -502,7 +504,7 @@ export default {
 Here are the configuration settings with their default values.
 
 ```
-<?php 
+<?php
 return [
     'model_dir' => base_path('app'),
     'controller_dir' => base_path('app/Http/Controllers'),
@@ -512,11 +514,13 @@ return [
 ];
 ?>
 ```
+
 To copy the config file to your working Laravel project enter the following artisan command
 
-`php artisan vendor:publish --provider="lummy\vueApi\vueApiServiceProvider" --tag="config"`
+`php artisan vendor:publish --provider="torkzz\generateLaravelApi\generateInitialServiceProvider" --tag="config"`
 
 ##### model_dir
+
 Specifies the location where the generated model files should be stored
 
 #### controller_dir
@@ -528,62 +532,64 @@ Specifies the location where the generated controller files should be stored
 Specifies the location where the Vue single file templates should be stored
 
 #### vue_url_prefix
+
 Specifies what prefix should be added to the URL in your view files. The default is `/api` ie `/api/posts`
 
 #### routes_dir
+
 Specifies the location of the routes directory
 
 #### routes_file
+
 Specifies the name of the routes file
 
 ### Customising the templates
 
 If you use another frontend framework such as React or you want to adjust the structure of the templates then you can customise the templates by publishing them to your working Laravel project
 
-`php artisan vendor:publish --provider="lummy\vueApi\vueApiServiceProvider" --tag="templates"``
+`php artisan vendor:publish --provider="torkzz\generateLaravelApi\generateInitialServiceProvider" --tag="templates"``
 
 They will then appear in
 
-`\resources\views\vendor\vueApi`
-
+`\resources\views\vendor\generateLaravelApi`
 
 ### Variables in the templates
 
 Each template file passes a data array with the following fields
 
 ##### $data['singular']
+
 The singular name for the DB table eg Post
 
 ##### $data['plural']
+
 The plural name for the DB table eg Posts
 
 ##### $data['singular_lower']
+
 The singular name for the DB table (lowercase) eg post
 
 ##### $data['plural_lower']
+
 The plural name for the DB table eg (lowercase) eg posts
 
 ##### $data['fields']
+
 An array of the fields that are part of the model.
 
- - name (the field name)
- - type (the mysql varchar, int etc)
- - simplified_type (text, textarea, number)
- - required (is the field required)
- - max (the maximum number of characters)
- 
+- name (the field name)
+- type (the mysql varchar, int etc)
+- simplified_type (text, textarea, number)
+- required (is the field required)
+- max (the maximum number of characters)
+
 ### Other things to note
- 
+
 I have only tested this on Laravel MYSQL driver so I'm not sure if it will work on other databases.
- 
+
 In Vue.js files the routes are presumed to be: using the posts example. You can easily configure these from the templates generated
- 
+
 /posts (Posts-list.vue)
 /posts/{id} (Posts-single.vue)
 
-Please feel free to contact me with any  feedback or suggestions https://github.com/aarondo
-
-
-
-
-
+Please feel free to contact me with any feedback or suggestions https://github.com/aarondo

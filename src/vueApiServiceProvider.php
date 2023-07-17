@@ -1,14 +1,14 @@
 <?php
 
-namespace lummy\vueApi;
+namespace torkzz\generateLaravelApi;
 
 use Illuminate\Support\ServiceProvider;
 
-class vueApiServiceProvider extends ServiceProvider
+class generateInitialServiceProvider extends ServiceProvider
 {
   
   protected $commands = [
-      'lummy\vueApi\generate'
+      'torkzz\generateLaravelApi\generate'
   ];
   
     /**
@@ -20,7 +20,7 @@ class vueApiServiceProvider extends ServiceProvider
     {
       
       $this->mergeConfigFrom(
-          __DIR__ . '/config/vueApi.php', 'vueApi'
+          __DIR__ . '/config/generateLaravelApi.php', 'generateLaravelApi'
       );
     
         $this->commands($this->commands);
@@ -35,16 +35,16 @@ class vueApiServiceProvider extends ServiceProvider
     {
 
         
-         $this->loadViewsFrom(__DIR__.'/templates', 'vueApi');
+         $this->loadViewsFrom(__DIR__.'/templates', 'generateLaravelApi');
         
         $this->publishes([
-             __DIR__ . '/config/vueApi.php' => config_path('vueApi.php'),
+             __DIR__ . '/config/generateLaravelApi.php' => config_path('generateLaravelApi.php'),
          ], 'config');
          
     
         
         $this->publishes([
-         __DIR__.'/templates' => resource_path('views/vendor/vueApi'),
+         __DIR__.'/templates' => resource_path('views/vendor/generateLaravelApi'),
        ],'templates');
          
     }

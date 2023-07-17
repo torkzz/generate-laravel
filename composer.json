@@ -1,24 +1,28 @@
 {
-    "name": "pixelrank/laravel-vuexy-crud-generator",
-    "description": "Creates a basic skeleton for a CRUD app in both Laravel & Vue.js single file components.",
-    "authors": [
-        {
-            "name": "Bilal Arshad",
-            "email": "bilalarshad21041@gmail.com"
-        }
-    ],
-    "license": "MIT",
-    "require": {},
-    "autoload": {
-        "psr-4": {
-            "lummy\\": "src/"
-        }
+  "name": "torkzz/generate-laravel",
+  "description": "this is a fork of github.com/harishafeez1/laravel-vuexy-crud-generator",
+  "authors": [
+    {
+      "name": "torkzz",
+      "email": "vicbryanabalos@gmail.com"
     },
-    "extra": {
+    {
+      "name": "Bilal Arshad",
+      "email": "bilalarshad21041@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "torkzz\\": "src/"
+    }
+  },
+  "extra": {
     "laravel": {
-          "providers": [
-              "lummy\\vueApi\\vueApiServiceProvider"
-          ]
+      "providers": [
+        "torkzz\\generateLaravelApi\\generateInitialServiceProvider"
+      ]
     }
   }
 }

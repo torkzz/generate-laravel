@@ -1,6 +1,6 @@
 <?php
 
-namespace lummy\vueApi;
+namespace torkzz\generateLaravelApi;
 
 use Illuminate\Console\Command;
 use Str;
@@ -17,7 +17,7 @@ class generate extends Command
    *
    * @var string
    */
-  protected $signature = 'vueapi:generate {model}';
+  protected $signature = 'generateLaravelApi:generate {model}';
 
   /**
    * The console command description.
@@ -39,7 +39,7 @@ class generate extends Command
   public function createModel($data)
   {
 
-    $client = Storage::createLocalDriver(['root' => config('vueApi.model_dir')]);
+    $client = Storage::createLocalDriver(['root' => config('generateLaravelApi.model_dir')]);
 
     // Check if file already exists. If it does ask if we want to overwrite
     if ($client->exists($data['singular'])) {
@@ -49,7 +49,7 @@ class generate extends Command
     }
 
     // Create the file
-    $modelTemplate = view::make('vueApi::model', ['data' => $data])->render();
+    $modelTemplate = view::make('generateLaravelApi::model', ['data' => $data])->render();
     $modelTemplate = "<?php \n" . $modelTemplate . " ?>";
     $client->put($data['singular'] . '.php', $modelTemplate);
 
@@ -61,7 +61,7 @@ class generate extends Command
   public function createController($data)
   {
 
-    $client = Storage::createLocalDriver(['root' => config('vueApi.controller_dir')]);
+    $client = Storage::createLocalDriver(['root' => config('generateLaravelApi.controller_dir')]);
 
     // Check if file already exists. If it does ask if we want to overwrite
     if ($client->exists($data['singular'] . 'Controller.php')) {
@@ -72,7 +72,7 @@ class generate extends Command
 
 
     // Create the file
-    $controllerTemplate = view::make('vueApi::controller', ['data' => $data])->render();
+    $controllerTemplate = view::make('generateLaravelApi::controller', ['data' => $data])->render();
     $controllerTemplate = "<?php \n" . $controllerTemplate . " ?>";
     $client->put($data['singular'] . 'Controller.php', $controllerTemplate);
 
@@ -83,7 +83,7 @@ class generate extends Command
   public function createVueListTemplate($data)
   {
 
-    $client = Storage::createLocalDriver(['root' => config('vueApi.vue_files_dir')."/".$data['singular_lower']]);
+    $client = Storage::createLocalDriver(['root' => config('generateLaravelApi.vue_files_dir')."/".$data['singular_lower']]);
 
     // Check if file already exists. If it does ask if we want to overwrite
     if ($client->exists($data['singular'] . 'List.vue')) {
@@ -93,7 +93,7 @@ class generate extends Command
     }
 
     // Create the file
-    $vueTemplate = view::make('vueApi::vue-list', ['data' => $data])->render();
+    $vueTemplate = view::make('generateLaravelApi::vue-list', ['data' => $data])->render();
     $client->put($data['singular'] . 'List.vue', $vueTemplate);
 
     return;
@@ -102,7 +102,7 @@ class generate extends Command
   public function createVueSingleTemplate($data)
   {
 
-    $client = Storage::createLocalDriver(['root' => config('vueApi.vue_files_dir')."/".$data['singular_lower']]);
+    $client = Storage::createLocalDriver(['root' => config('generateLaravelApi.vue_files_dir')."/".$data['singular_lower']]);
 
     // Check if file already exists. If it does ask if we want to overwrite
     if ($client->exists($data['singular'] . 'View.vue')) {
@@ -112,7 +112,7 @@ class generate extends Command
     }
 
     // Create the file
-    $vueTemplate = view::make('vueApi::vue-single', ['data' => $data])->render();
+    $vueTemplate = view::make('generateLaravelApi::vue-single', ['data' => $data])->render();
     $client->put($data['singular'] . 'View.vue', $vueTemplate);
 
     return;
@@ -120,7 +120,7 @@ class generate extends Command
   public function createVueAddTemplate($data)
   {
 
-    $client = Storage::createLocalDriver(['root' => config('vueApi.vue_files_dir')."/".$data['singular_lower']]);
+    $client = Storage::createLocalDriver(['root' => config('generateLaravelApi.vue_files_dir')."/".$data['singular_lower']]);
 
     // Check if file already exists. If it does ask if we want to overwrite
     if ($client->exists($data['singular'] . 'View.vue')) {
@@ -130,7 +130,7 @@ class generate extends Command
     }
 
     // Create the file
-    $vueTemplate = view::make('vueApi::vue-add', ['data' => $data])->render();
+    $vueTemplate = view::make('generateLaravelApi::vue-add', ['data' => $data])->render();
     $client->put($data['singular'] . 'Add.vue', $vueTemplate);
 
     return;
@@ -139,7 +139,7 @@ class generate extends Command
   public function createVueAddFormTemplate($data)
   {
 
-    $client = Storage::createLocalDriver(['root' => config('vueApi.vue_files_dir')."/".$data['singular_lower']]);
+    $client = Storage::createLocalDriver(['root' => config('generateLaravelApi.vue_files_dir')."/".$data['singular_lower']]);
 
     // Check if file already exists. If it does ask if we want to overwrite
     if ($client->exists($data['singular'] . 'View.vue')) {
@@ -149,7 +149,7 @@ class generate extends Command
     }
 
     // Create the file
-    $vueTemplate = view::make('vueApi::vue-add-form', ['data' => $data])->render();
+    $vueTemplate = view::make('generateLaravelApi::vue-add-form', ['data' => $data])->render();
     $client->put($data['singular'] . 'AddForm.vue', $vueTemplate);
 
     return;
@@ -158,7 +158,7 @@ class generate extends Command
   public function createVueEditTemplate($data)
   {
 
-    $client = Storage::createLocalDriver(['root' => config('vueApi.vue_files_dir')."/".$data['singular_lower']]);
+    $client = Storage::createLocalDriver(['root' => config('generateLaravelApi.vue_files_dir')."/".$data['singular_lower']]);
 
     // Check if file already exists. If it does ask if we want to overwrite
     if ($client->exists($data['singular'] . 'Edit.vue')) {
@@ -168,7 +168,7 @@ class generate extends Command
     }
 
     // Create the file
-    $vueTemplate = view::make('vueApi::vue-edit', ['data' => $data])->render();
+    $vueTemplate = view::make('generateLaravelApi::vue-edit', ['data' => $data])->render();
     $client->put($data['singular'] . 'Edit.vue', $vueTemplate);
 
     return;
@@ -178,7 +178,7 @@ class generate extends Command
     public function createVueEditFormTemplate($data)
     {
   
-      $client = Storage::createLocalDriver(['root' => config('vueApi.vue_files_dir')."/".$data['singular_lower']]);
+      $client = Storage::createLocalDriver(['root' => config('generateLaravelApi.vue_files_dir')."/".$data['singular_lower']]);
   
       // Check if file already exists. If it does ask if we want to overwrite
       if ($client->exists($data['singular'] . 'EditForm.vue')) {
@@ -188,7 +188,7 @@ class generate extends Command
       }
   
       // Create the file
-      $vueTemplate = view::make('vueApi::vue-edit-form', ['data' => $data])->render();
+      $vueTemplate = view::make('generateLaravelApi::vue-edit-form', ['data' => $data])->render();
       $client->put($data['singular'] . 'EditForm.vue', $vueTemplate);
   
       return;
@@ -197,7 +197,7 @@ class generate extends Command
   public function createRoutes($data)
   {
 
-    $client = Storage::createLocalDriver(['root' => config('vueApi.routes_dir')]);
+    $client = Storage::createLocalDriver(['root' => config('generateLaravelApi.routes_dir')]);
     $routes ="\nRoute::group(['middleware' => 'auth:api'], function () {\n";
     $routes.= "\nRoute::group(['prefix' => '" . $data['plural_lower'] . "'], function () {\n";
     $routes .= "\nRoute::get('/', '" . $data['singular'] . "Controller@index');\n";
@@ -208,13 +208,13 @@ class generate extends Command
     $routes .= "Route::get('/delete/{id}', '" . $data['singular'] . "Controller@delete');\n";
     $routes .="\n});\n";
     $routes .="\n});\n";
-    if ($client->exists(config('vueApi.routes_file'))) {
-      $routeFile = $client->get('/' . config('vueApi.routes_file'));
+    if ($client->exists(config('generateLaravelApi.routes_file'))) {
+      $routeFile = $client->get('/' . config('generateLaravelApi.routes_file'));
       $appendedRoutes = $routeFile . $routes;
-      $client->put(config('vueApi.routes_file'), $appendedRoutes);
+      $client->put(config('generateLaravelApi.routes_file'), $appendedRoutes);
     } else {
-      $routeFile = $client->get('/' . config('vueApi.routes_file'));
-      $client->put(config('vueApi.routes_file'), $routes);
+      $routeFile = $client->get('/' . config('generateLaravelApi.routes_file'));
+      $client->put(config('generateLaravelApi.routes_file'), $routes);
     }
   }
 
@@ -222,7 +222,7 @@ class generate extends Command
   public function createVueRoutes($data)
   {
     
-    $client = Storage::createLocalDriver(['root' => config('vueApi.vue_router_dir')]);
+    $client = Storage::createLocalDriver(['root' => config('generateLaravelApi.vue_router_dir')]);
     $routes ="\n{\n";
    
     $routes .= "\npath: '/".$data['plural_lower']."',\n";
@@ -284,13 +284,13 @@ class generate extends Command
     $routes .="\n}\n";
     $routes .="\n},\n";
 
-    if ($client->exists(config('vueApi.vue_router_file'))) {
-      $routeFile = $client->get('/' . config('vueApi.vue_router_file'));
+    if ($client->exists(config('generateLaravelApi.vue_router_file'))) {
+      $routeFile = $client->get('/' . config('generateLaravelApi.vue_router_file'));
       $appendedRoutes = $routeFile . $routes;
-      $client->put(config('vueApi.vue_router_file'), $appendedRoutes);
+      $client->put(config('generateLaravelApi.vue_router_file'), $appendedRoutes);
     } else {
-      $routeFile = $client->get('/' . config('vueApi.vue_router_file'));
-      $client->put(config('vueApi.routes_file'), $routes);
+      $routeFile = $client->get('/' . config('generateLaravelApi.vue_router_file'));
+      $client->put(config('generateLaravelApi.routes_file'), $routes);
     }
   }
 
@@ -299,7 +299,7 @@ class generate extends Command
   {
    
     
-    $client = Storage::createLocalDriver(['root' => config('vueApi.nav_bar_dir')]);
+    $client = Storage::createLocalDriver(['root' => config('generateLaravelApi.nav_bar_dir')]);
     $routes ="\n{\n";
    
     $routes .= "\nurl: '/".$data['plural_lower']."',\n";
@@ -309,13 +309,13 @@ class generate extends Command
     $routes .="\n},\n";
 
 
-    if ($client->exists(config('vueApi.nav_bar_file'))) {
-      $routeFile = $client->get('/' . config('vueApi.nav_bar_file'));
+    if ($client->exists(config('generateLaravelApi.nav_bar_file'))) {
+      $routeFile = $client->get('/' . config('generateLaravelApi.nav_bar_file'));
       $appendedRoutes = $routeFile . $routes;
-      $client->put(config('vueApi.nav_bar_file'), $appendedRoutes);
+      $client->put(config('generateLaravelApi.nav_bar_file'), $appendedRoutes);
     } else {
-      $routeFile = $client->get('/' . config('vueApi.nav_bar_file'));
-      $client->put(config('vueApi.routes_file'), $routes);
+      $routeFile = $client->get('/' . config('generateLaravelApi.nav_bar_file'));
+      $client->put(config('generateLaravelApi.routes_file'), $routes);
     }
   }
 
@@ -500,6 +500,6 @@ class generate extends Command
     $this->createVueRoutes($data);
     $this->createNavBarMenu($data);
 
-    return $this->info('Created ' . $singular . 'Controller.php, ' . $singular . '.vue and the routes in ' . config('vueApi.routes_file'));
+    return $this->info('Created ' . $singular . 'Controller.php, ' . $singular . '.vue and the routes in ' . config('generateLaravelApi.routes_file'));
   }
 }
