@@ -7,9 +7,9 @@ use Illuminate\Support\ServiceProvider;
 class generateInitialServiceProvider extends ServiceProvider
 {
   
-    protected $commands = [
-        'torkzz\generateLaravelApi\generate'
-    ];
+  protected $commands = [
+      'torkzz\generateLaravelApi\generate'
+  ];
   
     /**
      * Register services.
@@ -19,10 +19,9 @@ class generateInitialServiceProvider extends ServiceProvider
     public function register()
     {
       
-        $this->mergeConfigFrom(
-            __DIR__ . '/config/generateLaravelApi.php',
-            'generateLaravelApi'
-        );
+      $this->mergeConfigFrom(
+          __DIR__ . '/config/generateLaravelApi.php', 'generateLaravelApi'
+      );
     
         $this->commands($this->commands);
     }
@@ -36,7 +35,7 @@ class generateInitialServiceProvider extends ServiceProvider
     {
 
         
-        $this->loadViewsFrom(__DIR__.'/templates', 'generateLaravelApi');
+         $this->loadViewsFrom(__DIR__.'/templates', 'generateLaravelApi');
         
         $this->publishes([
              __DIR__ . '/config/generateLaravelApi.php' => config_path('generateLaravelApi.php'),
@@ -46,10 +45,7 @@ class generateInitialServiceProvider extends ServiceProvider
         
         $this->publishes([
          __DIR__.'/templates' => resource_path('views/vendor/generateLaravelApi'),
-       ], 'templates');
+       ],'templates');
          
     }
-    
-    
-
 }

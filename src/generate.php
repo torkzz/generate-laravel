@@ -55,8 +55,6 @@ class generate extends Command
         return;
     }
 
-
-
     public function createController($data)
     {
 
@@ -77,7 +75,6 @@ class generate extends Command
 
         return;
     }
-
 
     public function createVueListTemplate($data)
     {
@@ -116,6 +113,7 @@ class generate extends Command
 
         return;
     }
+
     public function createVueAddTemplate($data)
     {
 
@@ -153,7 +151,7 @@ class generate extends Command
 
         return;
     }
-    //edit view
+
     public function createVueEditTemplate($data)
     {
 
@@ -173,23 +171,22 @@ class generate extends Command
         return;
     }
 
-    //edit form
     public function createVueEditFormTemplate($data)
     {
-  
+
         $client = Storage::createLocalDriver(['root' => config('generateLaravelApi.vue_files_dir')."/".$data['singular_lower']]);
-  
+
         // Check if file already exists. If it does ask if we want to overwrite
         if ($client->exists($data['singular'] . 'EditForm.vue')) {
             if (!$this->confirm($data['singular'] . 'EditForm.vue already exists. Would you like to overwrite this component?')) {
                 return false;
             }
         }
-  
+
         // Create the file
         $vueTemplate = view::make('generateLaravelApi::vue-edit-form', ['data' => $data])->render();
         $client->put($data['singular'] . 'EditForm.vue', $vueTemplate);
-  
+
         return;
     }
 
@@ -220,10 +217,10 @@ class generate extends Command
     //vue routes in router.js
     public function createVueRoutes($data)
     {
-    
+  
         $client = Storage::createLocalDriver(['root' => config('generateLaravelApi.vue_router_dir')]);
         $routes ="\n{\n";
-   
+ 
         $routes .= "\npath: '/".$data['plural_lower']."',\n";
         $routes .= "\nname: '".$data['plural_lower']."',\n";
         $routes .= "\ncomponent: () =>\n";
@@ -296,11 +293,11 @@ class generate extends Command
     //vue routes in router.js
     public function createNavBarMenu($data)
     {
-   
-    
+ 
+  
         $client = Storage::createLocalDriver(['root' => config('generateLaravelApi.nav_bar_dir')]);
         $routes ="\n{\n";
-   
+ 
         $routes .= "\nurl: '/".$data['plural_lower']."',\n";
         $routes .= "\nname: '".$data['plural_lower']."',\n";
         $routes .= "\nslug: '".$data['plural_lower']."',\n";
@@ -350,7 +347,7 @@ class generate extends Command
 
             $fieldsArray[$i]['name'] = $key->Field;
             $fieldsArray[$i]['type'] = $type;
-      
+    
             $fieldsArray[$i]['simplified_type'] = $simplifiedType;
             $fieldsArray[$i]['required'] = $required;
             $fieldsArray[$i]['max'] = (isset($matches[0][0])) ? (int)$matches[0][0] : false;
@@ -378,8 +375,6 @@ class generate extends Command
 
         foreach ($data as $key) {
 
-
-
             $vform .= "\t\t\t\t\t<div class='form-group'>\n";
             $vform .= "\t\t\t\t\t\t<label>" . $key->Field . "</label>\n";
 
@@ -388,14 +383,11 @@ class generate extends Command
 
             preg_match_all('!\d+!', $key->Type, $matches);
 
-
-
             $lengthValue = (isset($matches[0][0])) ? 'max:' . array_push($thisValidations, 'max:' . $matches[0][0]) : '';
 
             $inputLength = (isset($matches[0][0])) ? "maxlength='" . $matches[0][0] . "'" : '';
 
             $fieldsArray[$key->Field] = '';
-
 
             if ($thisValidations && $key->Field !== 'id' && $key->Field !== 'created_at' && $key->Field !== 'updated_at') {
                 $validatorArray[0][$key->Field] = implode('|', $thisValidations);
@@ -414,16 +406,13 @@ class generate extends Command
                 $vform .= "\t\t\t\t\t\t<input type='number' " . $inputLength . " placeholder='" . $key->Field . "' v-model='form." . $key->Field . "'/>\n";
             }
 
-
             $stringArray = ['char', 'varchar', 'tinystring'];
-
 
             if (in_array($type, $stringArray)) {
                 $vform .= "\t\t\t\t\t\t<input type='text' " . $inputLength . " placeholder='" . $key->Field . "' v-model='form." . $key->Field . "'/>\n";
             }
 
             $textAreaArray = ['text', 'mediumtext', 'longtext'];
-
 
             if (in_array($type, $textAreaArray)) {
 
@@ -453,12 +442,8 @@ class generate extends Command
                 $vform .= "\t\t\t\t\t\t<has-error :form='form' field='" . $key->Field . "'></has-error>\n";
             }
 
-
             $vform .= "\t\t\t\t\t</div>\n\n";
         }
-
-
-
 
         //$validatorArray
         //$vform
@@ -466,9 +451,6 @@ class generate extends Command
 
         return ['htmlForm' => $vform, 'validator' => $validatorArray, 'fields' => $fieldsArray];
     }
-
-
-
 
     /**
      * Execute the console command.
@@ -478,26 +460,24 @@ class generate extends Command
     public function handle()
     {
 
-
-
         $singular = strtolower(Str::camel($this->argument('model')));
         $singular = Ucfirst(Str::singular($singular));
         $plural = Ucfirst(Str::plural($singular));
 
         $data = $this->getFieldsData($singular, $plural);
 
-
         $this->createRoutes($data);
         $this->createModel($data);
         $this->createController($data);
-        $this->createVueListTemplate($data);
-        $this->createVueAddFormTemplate($data);
-        $this->createVueAddTemplate($data);
-        $this->createVueSingleTemplate($data);
-        $this->createVueEditTemplate($data);
-        $this->createVueEditFormTemplate($data);
-        $this->createVueRoutes($data);
-        $this->createNavBarMenu($data);
+        // remove for future
+        // $this->createVueListTemplate($data);
+        // $this->createVueAddFormTemplate($data);
+        // $this->createVueAddTemplate($data);
+        // $this->createVueSingleTemplate($data);
+        // $this->createVueEditTemplate($data);
+        // $this->createVueEditFormTemplate($data);
+        // $this->createVueRoutes($data);
+        // $this->createNavBarMenu($data);
 
         return $this->info('Created ' . $singular . 'Controller.php, ' . $singular . '.vue and the routes in ' . config('generateLaravelApi.routes_file'));
     }
