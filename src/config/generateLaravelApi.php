@@ -1,4 +1,4 @@
-<?php 
+<?php
 return [
     'model_dir' => base_path('app'),
     'controller_dir' => base_path('app/Http/Controllers'),
@@ -11,4 +11,3 @@ return [
     'nav_bar_dir' => base_path('resources/js/src/layouts/components/vertical-nav-menu'),
     'nav_bar_file' => 'navMenuItems.js',
 ];
-?>
