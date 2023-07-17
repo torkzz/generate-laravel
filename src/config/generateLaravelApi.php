@@ -1,6 +1,6 @@
 <?php
 return [
-    'model_dir' => base_path('app'),
+    'model_dir' => base_path('app/Models'),
     'controller_dir' => base_path('app/Http/Controllers'),
     'vue_files_dir' => base_path('resources/views/vue'),
     'vue_url_prefix' => '/api',

@@ -16,14 +16,14 @@ class generate extends Command
      *
      * @var string
      */
-    protected $signature = 'zz:generate {model}';
+    protected $signature = 'zz:laravel {model}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generated the routes, controller & Vue.js single file templates';
+    protected $description = 'Generated the routes, controller and model';
 
     /**
      * Create a new command instance.

@@ -2,7 +2,7 @@
 
 #### Overview
 
-A Laravel package that lets you generate boilerplate code for a Vue.js/Laravel app. Simply enter the name of a database table and based on that it will create:
+A Laravel package that lets you generate boilerplate code for a Laravel app. Simply enter the name of a database table and based on that it will create:
 
 - A Laravel model
 - A Laravel controller (with get, list, create, update, delete as well as validation based on a chosen DB table)
@@ -36,9 +36,9 @@ Then run the migrate command to create the posts table
 
 `php artisan migrate`
 
-Once you have done that you just need to run one `generateLaravelApi` command. Add the name of your table to the end of the command so in this case it's posts.
+Once you have done that you just need to run one `zz:laravel` command. Add the name of your table to the end of the command so in this case it's posts.
 
-`php artisan zz:generate posts`
+`php artisan zz:laravel posts`
 
 This will then generate all the files mentioned above.
 
@@ -582,14 +582,3 @@ An array of the fields that are part of the model.
 - simplified_type (text, textarea, number)
 - required (is the field required)
 - max (the maximum number of characters)
-
-### Other things to note
-
-I have only tested this on Laravel MYSQL driver so I'm not sure if it will work on other databases.
-
-In Vue.js files the routes are presumed to be: using the posts example. You can easily configure these from the templates generated
-
-/posts (Posts-list.vue)
-/posts/{id} (Posts-single.vue)
-
-Please feel free to contact me with any feedback or suggestions https://github.com/aarondo
