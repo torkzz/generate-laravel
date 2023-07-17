@@ -1,6 +1,6 @@
 {
   "name": "torkzz/generate-laravel",
-  "description": "this is a fork of github.com/harishafeez1/laravel-vuexy-crud-generator",
+  "description": "this is a fork of https://github.com/aaronlumsden/laravel-vue-api-crud-generator",
   "authors": [
     {
       "name": "torkzz",
