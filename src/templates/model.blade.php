@@ -1,30 +1,25 @@
-namespace App\Models;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 
-class {{ $data['singular'] }} extends Model
+class {{ $data['plural'] }} extends Model
 {
 
- use Notifiable;
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $guarded = [
+        'id'
+    ];
 
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = [];
-
-      /**
-     * @var array
-     */
-    protected $hidden = [
-        'created_at', 'updated_at',
+    protected $casts = [
+        ''
     ];
 }
