@@ -15,7 +15,7 @@
   "require": {},
   "autoload": {
     "psr-4": {
-      "torkzz\\": "src/"
+      "torkzz\\generateLaravelApi\\": "src/"
     }
   },
   "extra": {
