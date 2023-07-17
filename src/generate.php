@@ -17,7 +17,7 @@ class generate extends Command
    *
    * @var string
    */
-  protected $signature = 'generateLaravelApi:generate {model}';
+  protected $signature = 'zz:generate {model}';
 
   /**
    * The console command description.

@@ -13,7 +13,7 @@ This package aims to speed up the process of communicating between backend (Lara
 
 ### Installation
 
-`composer require torkzz/laravel-vue-api-crud-generator`
+`composer require torkzz/generate-laravel`
 
 ## Usage
 
@@ -38,7 +38,7 @@ Then run the migrate command to create the posts table
 
 Once you have done that you just need to run one `generateLaravelApi` command. Add the name of your table to the end of the command so in this case it's posts.
 
-`php artisan generateLaravelApi:generate posts`
+`php artisan zz:generate posts`
 
 This will then generate all the files mentioned above.
 
